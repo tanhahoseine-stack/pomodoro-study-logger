@@ -85,23 +85,25 @@ export class PomodoroLogger {
 		const { app, settings: s } = this.plugin;
 		const { dir, path } = this.dailyPath(new Date());
 
-		let file = app.vault.getAbstractFileByPath(path);
-		if (!(file instanceof TFile)) {
+		const existing = app.vault.getAbstractFileByPath(path);
+		let target: TFile;
+		if (existing instanceof TFile) {
+			target = existing;
+		} else {
 			await ensureFolder(app, dir);
 			const tpl = app.vault.getAbstractFileByPath(normalizePath(s.templatePath));
 			const body =
 				tpl instanceof TFile
 					? await app.vault.read(tpl)
 					: `---\ntype: daily\ntags:\n  - روزانه\n---\n\n${s.reportHeading}\n\n`;
-			file = await app.vault.create(path, body);
+			target = await app.vault.create(path, body);
 		}
-		const target = file as TFile;
 
 		let newText = "";
 		await app.vault.process(target, (t) => (newText = this.addPomLine(t, book, from, to)));
 		const st = this.dayStats(newText);
 
-		await app.fileManager.processFrontMatter(target, (fm) => {
+		await app.fileManager.processFrontMatter(target, (fm: Record<string, unknown>) => {
 			fm[s.pomCountField] = st.p;
 			fm[s.pagesField] = st.g;
 			fm[s.minutesField] = Math.max(Number(fm[s.minutesField]) || 0, st.p * s.pomMinutes);
@@ -135,7 +137,7 @@ export class PomodoroLogger {
 		if (!removed) throw new Error("CHANGED");
 
 		const st = this.dayStats(newText);
-		await app.fileManager.processFrontMatter(file, (fm) => {
+		await app.fileManager.processFrontMatter(file, (fm: Record<string, unknown>) => {
 			fm[s.pomCountField] = st.p;
 			fm[s.pagesField] = st.g;
 			fm[s.minutesField] = Math.max(0, (Number(fm[s.minutesField]) || 0) - s.pomMinutes);

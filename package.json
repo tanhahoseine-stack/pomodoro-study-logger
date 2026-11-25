@@ -1,6 +1,6 @@
 {
 	"name": "pomodoro-study-logger",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "ثبت پومودوروهای مطالعه در یادداشت روزانه‌ی Obsidian",
 	"main": "main.js",
 	"scripts": {
@@ -13,7 +13,6 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^20.11.0",
-		"builtin-modules": "3.3.0",
 		"esbuild": "0.19.12",
 		"obsidian": "latest",
 		"tslib": "2.6.2",

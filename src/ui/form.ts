@@ -73,8 +73,8 @@ export class PomodoroForm {
 				},
 			});
 			const fill = bar.createDiv();
-			fill.style.width = "0%";
-			window.requestAnimationFrame(() => (fill.style.width = `${pct}%`));
+			fill.setCssStyles({ width: "0%" });
+			window.requestAnimationFrame(() => fill.setCssStyles({ width: `${pct}%` }));
 		}
 
 		if (!this.only) {

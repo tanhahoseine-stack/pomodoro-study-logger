@@ -67,7 +67,7 @@ export function findBookFile(plugin: PomodoroPlugin, name: string): TFile | null
 /** روشن/خاموش کردن «میز مطالعه» در فراداده‌ی یادداشت کتاب */
 export async function setOnDesk(plugin: PomodoroPlugin, file: TFile, value: boolean): Promise<void> {
 	const field = plugin.settings.deskField;
-	await plugin.app.fileManager.processFrontMatter(file, (fm) => {
+	await plugin.app.fileManager.processFrontMatter(file, (fm: Record<string, unknown>) => {
 		fm[field] = value;
 	});
 }
@@ -117,7 +117,7 @@ export async function migrateLegacy(plugin: PomodoroPlugin): Promise<number> {
 		const moveDesk = s.deskField !== LEGACY_DESK && fm[LEGACY_DESK] !== undefined;
 		const moveGroup = s.groupField !== LEGACY_GROUP && fm[LEGACY_GROUP] !== undefined;
 		if (!moveDesk && !moveGroup) continue;
-		await app.fileManager.processFrontMatter(f, (m) => {
+		await app.fileManager.processFrontMatter(f, (m: Record<string, unknown>) => {
 			if (moveDesk) {
 				if (m[s.deskField] === undefined) m[s.deskField] = isTrue(m[LEGACY_DESK]);
 				delete m[LEGACY_DESK];
@@ -149,7 +149,7 @@ export async function createBook(plugin: PomodoroPlugin, data: NewBookData): Pro
 
 	try {
 		const file = await app.vault.create(path, "");
-		await app.fileManager.processFrontMatter(file, (fm) => {
+		await app.fileManager.processFrontMatter(file, (fm: Record<string, unknown>) => {
 			fm[s.bookTypeField] = s.bookTypeValue;
 			fm[s.deskField] = data.onDesk;
 			fm[s.startField] = data.start;

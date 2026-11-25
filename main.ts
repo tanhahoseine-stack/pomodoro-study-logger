@@ -49,10 +49,6 @@ export default class PomodoroPlugin extends Plugin {
 		});
 	}
 
-	onunload(): void {
-		this.app.workspace.detachLeavesOfType(VIEW_TYPE);
-	}
-
 	/** وضعیت فرم؛ پس از ۱۵ دقیقه بی‌استفاده‌بودن بازنشانی می‌شود */
 	getFormState(): FormState {
 		const now = Date.now();
@@ -115,7 +111,7 @@ export default class PomodoroPlugin extends Plugin {
 			if (!leaf) return;
 			await leaf.setViewState({ type: VIEW_TYPE, active: true });
 		}
-		void workspace.revealLeaf(leaf);
+		await workspace.revealLeaf(leaf);
 	}
 
 	insertCodeBlock(): void {

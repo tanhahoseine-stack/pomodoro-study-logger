@@ -201,7 +201,7 @@ export class PomodoroSettingTab extends PluginSettingTab {
 					.addOption("codeblock", "درج Code Block در یادداشت")
 					.setValue(this.plugin.settings.openMode)
 					.onChange(async (v) => {
-						this.set("openMode", v as OpenMode);
+						this.set("openMode", v);
 						await this.plugin.saveSettings();
 					})
 			);
