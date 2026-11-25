@@ -1,0 +1,10 @@
+{
+	"id": "pomodoro-study-logger",
+	"name": "Pomodoro Study Logger",
+	"version": "1.0.0",
+	"minAppVersion": "1.4.0",
+	"description": "ثبت پومودوروهای مطالعه در یادداشت روزانه، با انتخاب کتاب و محاسبه‌ی خودکار صفحات.",
+	"author": "HoseinTanha",
+	"authorUrl": "https://github.com/tanhahoseine-stack",
+	"isDesktopOnly": false
+}
